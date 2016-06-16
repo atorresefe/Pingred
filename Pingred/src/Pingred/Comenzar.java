@@ -137,11 +137,13 @@ public void textoToip(String ipe){
 		
 		Runnable miRunnablePrincipal = new Runnable(){
 			
-			public void run() {
-								
+			public void run() {				
+				Pingred.botonComenzar.setEnabled(false);
+				Pingred.ipInicial.setEnabled(false);
+				Pingred.ipFinal.setEnabled(false);
 				int numhilo=0;
 				
-			//	System.out.println("Numero de filas"+Pingred.filas);
+				System.out.println("Numero de filas"+Pingred.filas);
 				
 				try{ 		
 					
@@ -152,8 +154,10 @@ public void textoToip(String ipe){
 						//	System.out.println("borrofila");
 						//	System.out.println("FILAS: "+Pingred.filas);
 						
+							//Pingred.tabla.removeRowSelectionInterval(Pingred.filas, 1); 
 							Pingred.modelo.removeRow (Pingred.filas-1);
 							Pingred.filas--;
+							System.out.println("Filas: "+Pingred.filas);
 						}
 					}
 
@@ -215,16 +219,15 @@ public void textoToip(String ipe){
 								
 								
 			    	 		if (primera){
-			    	 		//	System.out.println("Lanzo el primer hilo con ID: "+numhilo);
+			    	 			System.out.println("Lanzo el primer hilo con ID: "+numhilo);
+			    	 			System.out.println("Lanzo el primer hilo con IP: "+direccionIPconsulta);
 			    	 			Thread hilo =new Thread(new LanzaPing(direccionIPconsulta,numhilo));
+			    	 			Pingred.lanzapines++;
 			    	 			numhilo++;        	 			
 								hilo.start();
-								primera =false;
-								
+								primera =false;								
 
-			    	 		}
-				 		
-									
+			    	 		}				 											
 					 
 								if ((ip1cuartaparte==254) || (ip1cuartaparte==ip2cuartaparte)){
 									ip1cuartaparte=1;																				
@@ -257,14 +260,14 @@ public void textoToip(String ipe){
 								}
 							else{
 								ip1cuartaparte++;						
-							}						
-														
+								}																			
 								ipconsulta=String.valueOf(ip1primeraparte)+"."+String.valueOf(ip1segundaparte)+"."+String.valueOf(ip1terceraparte)+"."+String.valueOf(ip1cuartaparte);
 								direccionIPconsulta = InetAddress.getByName(ipconsulta);
 								if (sigue){						
 								//	System.out.println("Lanzo hilo con ID: "+numhilo);
 								//System.out.println("Parametro al Thread: "+direccionIPconsulta.getCanonicalHostName());						
 								Thread hilo =new Thread(new LanzaPing(direccionIPconsulta,numhilo));
+								Pingred.lanzapines++;								
 								numhilo++;
 								//id++;
 								hilo.start();					         						
@@ -275,13 +278,11 @@ public void textoToip(String ipe){
 			     	sigue=true; 
 			     	
 					}		  		 			
-					else{	
-					
+					else{						
 							//NO HAGO NADA
 					}
-					
-					  		 	
-				  	}
+					  		 
+				 }
 				catch (UnknownHostException noencuentrohost) {			
 					noencuentrohost.printStackTrace();
 				}
@@ -298,17 +299,26 @@ public void textoToip(String ipe){
 			   
 				  }
 	    
-				  
+				while(Pingred.lanzapines!=0){
+					System.out.println("LANZAPINES= "+Pingred.lanzapines);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {						
+						e.printStackTrace();
+					}
+				}
+				Pingred.botonComenzar.setEnabled(true);
+				Pingred.ipInicial.setEnabled(true);
+				Pingred.ipFinal.setEnabled(true);
 			}//FIN RUN	
 			
 					
 		};// FIN DEL RUNNABLE
-		Thread hiloPrincipal = new Thread (miRunnablePrincipal);
+		
+		Thread hiloPrincipal = new Thread (miRunnablePrincipal);		
 	    hiloPrincipal.start();
-
-	
+	    
+	    
 	} //FIN DEL ACTION PERFORMED
-
-
 
 }//FIN CLASE

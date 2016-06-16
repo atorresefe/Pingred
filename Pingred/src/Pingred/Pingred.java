@@ -29,37 +29,41 @@ public class Pingred {
 	public static String ipInicio=null;
 	public static String ipFin=null;
 	
+	static JButton botonComenzar= new JButton ("Comenzar");
+	
 	//public static JTable tabla = new JTable(4,4);
 	public static DefaultTableModel modelo = new DefaultTableModel();
 	public static JTable tabla = new JTable(modelo);
 	static int filas=0;
 	
+	static int lanzapines=0;
+	
+	
+	
 	public static void main(String[] args) {
 	
-		
-		
+				
 		Abrir abre=new Abrir();
 		Guardar guarda=new Guardar();
 		Salir sal=new Salir();
-		
-	 
-	 
+			 	 
 	 	Comenzar comienza=new Comenzar();  
 		principal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE );
 		principal.setBounds(100, 100, 150, 150);
+		principal.setResizable(false);
 
 		tabla.setFillsViewportHeight(true); //creo el contenedor scroll para la tabla		
-		tabla.getTableHeader();		
+		tabla.getTableHeader();	
+		tabla.getTableHeader().setReorderingAllowed(false);
 		modelo.addColumn("Máquina");
 		modelo.addColumn("IP");
 		modelo.addColumn("OTRO");
 		modelo.addColumn("OTRA");
 		
-		//JTextField ipInicial = new JTextField(15);
-		//JTextField ipFinal = new JTextField(15);
+		
 		JLabel ipInicialTexto =new JLabel("IP Inicial");
 		JLabel ipFinalTexto =new JLabel("IP Final");
-		JButton botonComenzar= new JButton ("Comenzar");
+	//	JButton botonComenzar= new JButton ("Comenzar");
 		
 		JMenuBar menu=new JMenuBar();
 		JMenu archivo=new JMenu("Archivo");
@@ -108,8 +112,7 @@ public class Pingred {
 
 		/*  **********************************
 
-		
-		
+	
 		****************************************** */
 		
 		

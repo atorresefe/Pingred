@@ -42,7 +42,6 @@ public class ComprobarIP extends InputVerifier {
                   return false;
               }
           }
-
 	               
 
       public boolean verify(JComponent input) {
@@ -50,9 +49,6 @@ public class ComprobarIP extends InputVerifier {
           Matcher m = pat.matcher(field.getText());
           return m.matches();
       }
-	
-	
-	
 	
 	
 }

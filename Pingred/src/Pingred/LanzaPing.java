@@ -16,25 +16,25 @@ public class LanzaPing  implements Runnable{
 	
 	public LanzaPing(InetAddress mydireccionIPconsulta,int idhilo) {
 	 	
+		
 		idhilocopy=idhilo;
-	//	System.out.println("LA IDE DEL HILO ES: "+idhilo);
+		System.out.println("LA IDE DEL HILO ES: "+idhilo);
 		consulta[idhilo]=mydireccionIPconsulta;						
-	//	System.out.println("AL LLEGAR: "+consulta[idhilo].getCanonicalHostName());	
-
+		System.out.println("AL LLEGAR: "+consulta[idhilo].getCanonicalHostName());	
 	}
 
 	public void run(){
-		try {
-		//	System.out.println("CREO LA FILA PARA EL HILO: "+Pingred.filas);
-			Pingred.modelo.addRow(Comenzar.filas); //PINTA NUEVA FILA
-	 		Pingred.filas++;
-	 		
+		try {			
+			System.out.println("CREO LA FILA PARA EL HILO: "+Pingred.filas);
+			Pingred.filas++;
+			Pingred.modelo.addRow(Comenzar.filas); //PINTA NUEVA FILA				 			 		 		
 	 	
 		//	System.out.println("Ping hilo a: "+ consulta[Comenzar.id].getCanonicalHostName());
 	 	//	System.out.println("EL COPY VALE: "+idhilocopy);
 	 	//	System.out.println("HAGO PING"+consulta[idhilocopy]);
 			llego=consulta[idhilocopy].isReachable(2000);
-			if (llego){ //LLEGO A LA M핽UINA																
+			if (llego){ //LLEGO A LA M핽UINA
+				System.out.println("LLEGO A LA MAQUINA"+idhilocopy);
 				Pingred.modelo.setValueAt (consulta[idhilocopy].getCanonicalHostName(), idhilocopy, 0);
 				Pingred.modelo.setValueAt (consulta[idhilocopy].getHostAddress(), idhilocopy, 1);
 				Pingred.modelo.setValueAt (llego, idhilocopy, 2);
@@ -42,7 +42,7 @@ public class LanzaPing  implements Runnable{
 				}
 			
 			else{ //NO LLEGO A LA M핽UINA
-			//	System.out.println("NO LLEGO A LA M핽UINA DEL HILO: "+idhilocopy);
+				System.out.println("NO LLEGO A LA M핽UINA DEL HILO: "+idhilocopy);
 				Pingred.modelo.setValueAt ("", idhilocopy, 0);
 				Pingred.modelo.setValueAt (consulta[idhilocopy].getHostAddress(), idhilocopy, 1);
 				Pingred.modelo.setValueAt (llego, idhilocopy, 2);
@@ -57,7 +57,7 @@ public class LanzaPing  implements Runnable{
 			e.printStackTrace();
 		} 
 	
-
+		Pingred.lanzapines--;
 	}//FIN DEL RUN
 
 } //FIN DE LA CLASE
